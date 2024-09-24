@@ -1,0 +1,38 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Video Generator</title>
+</head>
+<body>
+  <h1>Enter Text to Generate Animated Video</h1>
+  <form id="textForm">
+    <input type="text" id="textInput" required>
+    <button type="submit">Generate Video</button>
+  </form>
+  <div id="videoContainer"></div>
+
+  <script>
+    document.getElementById('textForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = document.getElementById('textInput').value;
+
+      const response = await fetch('/generate-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        alert('Frames captured successfully!');
+      } else {
+        alert('Failed to generate video.');
+      }
+    });
+  </script>
+</body>
+</html>
